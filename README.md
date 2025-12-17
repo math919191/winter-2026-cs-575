@@ -72,7 +72,6 @@ pytest tests
 ├── notebooks/
 │   └── 00_intro.ipynb
 ├── data/           # large datasets (ignored)
-├── outputs/        # generated artifacts (ignored)
 ├── pyproject.toml
 ├── README.md
 └── .gitignore
@@ -81,7 +80,7 @@ pytest tests
 - `src/course_utils`: reusable Python utilities for class exercises.
 - `notebooks`: Jupyter notebooks for demos and assignments.
 - `tests`: pytest-based unit/integration tests.
-- `data` and `outputs`: tracked folders with `.gitkeep`; contents are ignored by Git.
+- `data`: tracked folder with `.gitkeep`; contents are ignored by Git.
 
 ---
 

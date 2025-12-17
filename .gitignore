@@ -60,8 +60,6 @@ htmlcov/
 # Place datasets and large files here
 data/*
 !data/.gitkeep
-outputs/*
-!outputs/.gitkeep
 
 # Model artifacts & large binaries
 *.pt
