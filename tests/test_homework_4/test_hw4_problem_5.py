@@ -1,4 +1,4 @@
-from SIR_model import SIR_simulation
+from src.SIR_model import SIR_simulation
 
 def test_hw4_problem5() -> None:
     # Question
@@ -15,8 +15,8 @@ def test_hw4_problem5() -> None:
     
     ## Modify these values
     m = 1       # Probability of meeting
-    p = 0.4     # Transmission rate
-    gamma = 0.1 # Recovery rate
+    p = 0.2     # Transmission rate
+    gamma = 0.14 # Recovery rate
     N = 1000
     s0 = N-1
     i0 = 1
@@ -32,6 +32,7 @@ def test_hw4_problem5() -> None:
                                         i0,
                                         r0)
     my_simulation.run_simulation()
+    my_simulation.show_plot(3)
     # Then
     infectious_history = my_simulation.I
     assert N >= minimum_population_size

@@ -1,4 +1,4 @@
-from SIR_model import SIR_simulation
+from src.SIR_model import SIR_simulation
 
 def test_hw4_problem_1() -> None:
     # Question
@@ -14,7 +14,7 @@ def test_hw4_problem_1() -> None:
     ## Modify these values
     m = 1       # Probability of meeting
     p = 0.4     # Transmission rate
-    gamma = 0.1 # Recovery rate
+    gamma = 0.01 # Recovery rate
     N = 1000
     s0 = N-1
     i0 = 1
@@ -30,8 +30,11 @@ def test_hw4_problem_1() -> None:
                                         i0,
                                         r0)
     my_simulation.run_simulation()
+    my_simulation.show_plot('test_1')
     # Then
     infectious_history = my_simulation.I
     assert N >= minimum_population_size
     assert infectious_history[0] < 2
     assert max(infectious_history) > peak_number_infectious
+
+# test_hw4_problem_1()

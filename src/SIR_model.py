@@ -75,7 +75,7 @@ class SIR_simulation:
         return self.gamma*i
     
     ## Plotting functions ##
-    def show_plot(self) -> None:
+    def show_plot(self, name) -> None:
         plt.plot(self.t,self.S,'r',
                  self.t,self.I,'g--',
                  self.t,self.R,'b:')
@@ -85,3 +85,5 @@ class SIR_simulation:
             + ', gamma = ' + str(self.gamma) \
             + ', and R0 = ' + str(self.beta/self.gamma)
         plt.title(title)
+        # plt.show()
+        plt.savefig(f"fig_{name}.png")

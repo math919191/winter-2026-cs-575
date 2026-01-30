@@ -66,7 +66,7 @@ class TestCalculateSubplotGrid:
         with pytest.raises(ValueError, match="num_cols must be at least 1"):
             calculate_subplot_grid(5, 0)
 
-    def test_invalid_num_cols_negative(self) -> None -> None:
+    def test_invalid_num_cols_negative(self) -> None:
         """Test that negative columns raises ValueError."""
         with pytest.raises(ValueError, match="num_cols must be at least 1"):
             calculate_subplot_grid(5, -1)
