@@ -143,9 +143,9 @@ class DendrogramHandler:
 
             # The distance column can be done in two ways:
             # Use the number of nodes in the cluster as the distance
-            distance: int = len(clusters[n]) 
+            #distance: int = len(clusters[n]) 
             # or use the number of merges performed as the distance
-            # distance: int = i + 1
+            distance: int = i + 1
 
             # Set the count column
             count: int = len(clusters[n]) 
