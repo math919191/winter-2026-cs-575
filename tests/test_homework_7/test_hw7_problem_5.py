@@ -10,9 +10,18 @@ def test_hw7_problem_5() -> None:
 
     # Build graph
     G: nx.Graph = nx.Graph()
+    
     # TODO: Add vertices
-
+    vertices = list(range(12))
+    G.add_nodes_from(vertices)
     # TODO: Add edges
+    edges = [(0,1),(2,3),(4,5),
+             (0,2),(2,4),
+             (0,6),(0,7),(1,8),(1,9),
+             (2,10),(3,11)
+             ]
+    G.add_edges_from(edges)
+
 
     # Validate required edges exist
     required_edges = [(0, 1), (2, 3), (4, 5)]

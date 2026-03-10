@@ -11,10 +11,22 @@ def test_homework_problem_ev_vs_katz_collapse() -> None:
 
     # Create graph (STUDENT IMPLEMENTS THIS)
     adjacency_list: dict[int, set[int]] = {
-        # Example structure students must design
-        # 1: {...},
-        # ...
+        1: {4},
+        2: {4},
+        3: {4},
+        4: {5},
+        5: {6},
+        6: {4},
     }
+    # adjacency_list: dict[int, set[int]] = {
+    #     # Example structure students must design
+    #     1: {2},
+    #     2: {3},
+    #     3: {1},
+    #     4: {5},
+    #     5: {6},
+    #     6: {4},
+    # }
     G = adjacency_list_to_digraph(adjacency_list)
 
     # Basic structural checks

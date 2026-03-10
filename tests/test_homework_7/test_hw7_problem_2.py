@@ -1,6 +1,8 @@
 import networkx as nx
 from typing import Tuple, Hashable, Set
 
+import network_utilities as nu
+import random
 
 def test_hw7_problem_2() -> None:
     """
@@ -8,14 +10,19 @@ def test_hw7_problem_2() -> None:
     Graph must have >= 5 vertices, >= 2 edges, and partition must have >= 2 sets.
     """
 
-    # Build graph
-    G: nx.Graph = nx.Graph()
-    # TODO: Add vertices
+    num_nodes = 100
+    partition_size = 2
+    num_random_edges_per_partition = 5
 
-    # TODO: Add edges
+    partition = [set(range(i,i+partition_size)) for i in range(0,num_nodes,partition_size)]
 
-    # TODO: Define partition
-    partition: Tuple[Set[Hashable], ...] = ()
+    def get_edges(valid_vertices, num_edges):
+        return [(random.choice(list(valid_vertices)), random.choice(list(valid_vertices))) for i in range(num_edges)]
+
+    edges_list = [get_edges(p, num_random_edges_per_partition) for p in partition]
+    full_edge_set = set().union(*edges_list)
+
+    G = nu.vertex_edge_sets_to_graph({i for i in range(num_nodes)}, full_edge_set)
 
     # Basic structural checks
     assert isinstance(G, nx.Graph)

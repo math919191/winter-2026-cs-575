@@ -1,6 +1,8 @@
 import networkx as nx
 from typing import Tuple, Hashable, Set
 
+import random 
+import network_utilities as nu
 
 def test_hw7_problem_4() -> None:
     """
@@ -8,14 +10,28 @@ def test_hw7_problem_4() -> None:
     Graph must have >= 12 vertices, >= 2 edges, and partition must have >= 3 sets.
     """
 
-    # Build graph
-    G: nx.Graph = nx.Graph()
-    # TODO: Add vertices
+    num_nodes = 30
+    partition_size = 10 
+    num_random_edges = 90
 
-    # TODO: Add edges
+    partition = [set(range(i,i+partition_size)) for i in range(0,num_nodes,partition_size)]
 
-    # TODO: Define partition
-    partition: Tuple[Set[Hashable], ...] = ()
+    def get_edges(valid_vertices_1, valid_vertices_2, num_edges):
+        return [(random.choice(list(valid_vertices_1)), random.choice(list(valid_vertices_2))) for i in range(num_edges)]
+
+    i = 0
+    edges_list = [
+        get_edges(set(list(range(num_nodes))), set(list(range(num_nodes))), int(num_random_edges / 3)),
+        get_edges(set(partition[0]), set(partition[0]), num_random_edges),
+        get_edges(set(partition[1]), set(partition[1]), num_random_edges),
+        get_edges(set(partition[2]), set(partition[2]), num_random_edges),
+
+        ]
+
+
+    full_edge_set = set().union(*edges_list)
+
+    G = nu.vertex_edge_sets_to_graph({i for i in range(num_nodes)}, full_edge_set)
 
     # Validate structure
     assert isinstance(G, nx.Graph)

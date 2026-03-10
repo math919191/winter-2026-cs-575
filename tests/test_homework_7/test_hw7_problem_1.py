@@ -1,6 +1,8 @@
 import networkx as nx
 from typing import Tuple, Hashable, Set
 
+import network_utilities as nu
+import random
 
 def test_hw7_problem_1() -> None:
     """
@@ -10,12 +12,20 @@ def test_hw7_problem_1() -> None:
 
     # Build graph
     G: nx.Graph = nx.Graph()
-    # TODO: Add vertices
 
+    num_nodes = 60
+    edges = [(random.randint(0,num_nodes-1),random.randint(0,num_nodes-1)) for i in range(1000)]
+
+    G = nu.vertex_edge_sets_to_graph({i for i in range(num_nodes)}, set(edges))
+
+    partition = [set(range(num_nodes // 3)),set(range(num_nodes // 3, 2 * num_nodes // 3)),set(range(2 * num_nodes // 3,num_nodes)) ]
+
+    # TODO: Add vertices
+ 
     # TODO: Add edges
 
     # TODO: Define partition
-    partition: Tuple[Set[Hashable], ...] = ()
+    # partition: Tuple[Set[Hashable], ...] = ()
 
     # Validate structure
     assert isinstance(G, nx.Graph)
