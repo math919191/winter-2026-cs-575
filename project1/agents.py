@@ -67,25 +67,61 @@ class Agent:
 
 class PopulationManager:
     
-    def __init__(self, graph, init_S=.9, init_I=.05, init_E=.05):
+    def __init__(self, graph, init_S=.9, init_I=.05, init_E=.05, init_random=False):
         if not (init_S + init_E + init_I) == 1:
             print("Error....does not total to 1")
         
         population_size = graph.number_of_nodes()
-
         self.agents = {} # map id to the agent itself 
 
-        for i in range(population_size):
-            if i < init_S * population_size:
-                self.agents[i] = Agent(initial_state=SUSCEPTIBLE)
-            elif i < ((init_S + init_I) * population_size):
-                self.agents[i] = Agent(initial_state=INFECTED)
-            else:
-                self.agents[i] = Agent(initial_state=EXPOSED)
+        if init_random:
+            self.agents = self._random_agents_init(init_S, init_I, init_E, population_size)
+        else:
+            self.agents = self._init_agents_consistently(init_S, init_I, init_E, population_size)
 
         self.graph = graph
-
         self.agent_history = []
+
+
+    def _init_agents_consistently(self, init_S, init_I, init_E, population_size):
+        agents = {}
+        for i in range(population_size):
+            if i < init_S * population_size:
+                agents[i] = Agent(initial_state=SUSCEPTIBLE)
+            elif i < ((init_S + init_I) * population_size):
+                agents[i] = Agent(initial_state=INFECTED)
+            else:
+                agents[i] = Agent(initial_state=EXPOSED)
+        return agents
+
+    def _random_agents_init(self, init_S, init_I, init_E, num_nodes):
+        num_I = round(num_nodes * init_I) 
+        num_E = round(num_nodes * init_E)
+        num_S = num_nodes - num_I - num_E 
+
+        possible_nodes = {i for i in range(num_nodes)}
+    
+        I_nodes = random.sample(list(possible_nodes), num_I)
+        possible_nodes = possible_nodes - set(I_nodes)
+
+        E_nodes = random.sample(list(possible_nodes), num_E)
+        possible_nodes = possible_nodes - set(E_nodes)
+
+        S_nodes = possible_nodes
+
+        agents = {}
+
+        for i in range(num_nodes):
+            state = None
+            if i in I_nodes:
+                state = INFECTED
+            elif i in E_nodes:
+                state = EXPOSED
+            else: 
+                state = SUSCEPTIBLE
+            agents[i] = Agent(initial_state=state)
+
+        return agents
 
 
     def _get_agent_neighbors(self, agent_id, graph, last_step_agents_dict):

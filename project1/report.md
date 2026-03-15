@@ -3,14 +3,13 @@
 ### Names
 
 Rebekah Daniels 
-
-I did not work with anyone else on this project. 
+3/14/26
+CS575
+Dr Goodrich
 
 ### Abstract 
 
 • Abstract: Summarize what you did and what you learned.
-
-
 
 ### Introduction
 
@@ -18,9 +17,15 @@ The COVID-19 pandemic dramatically influenced life. Better understanding how dis
 This report looks at the spread of disease over time using different networks. 
 For each network, this report analyzed the network itself, the spread of disease in the network over time, and 
 varyied parameters to compare the spread of the disease. 
-This report begins by explaning the experiment conditions, then proposes hypotheses about the spread over a network.
+
+<!-- This report begins by explaning the experiment conditions, then proposes hypotheses about the spread over a network.
 Next, it will present results, then it will discuss which hypotheses were correct and incorrect, and finally propose some future work. 
-This report also includes figures and tables discussing the results.
+This report also includes figures and tables discussing the results. -->
+
+The next section in this report will explain the general experiment conditions. 
+
+For each experiment condition, a hypothesis will be presented, results testing the hypothesis, followed by a 
+discussion about whether or not the hypothesis was correct. 
 
 ### Experiment Conditions
 
@@ -70,6 +75,46 @@ The will conduct the following experiments:
 networks under the different conditions. Give some justification for your hypotheses in terms of
 network characteristics (e.g., the metrics in your summary table).
 
+For experimental conditions number 1, the predictions are as follows for each of the graphs: 
+
+**Complete Graph** - I predict that the 
+**Lattice Graph** - 
+**Barabasi size 100** - 
+**Barabasi size 410**
+**Dublin graph** -
+
+
+                   maximum degree  average degree  diameter  radius   density
+Complete Graph                 99       99.000000         1       1  1.000000
+Lattice Graph                   4        3.600000        18      10  0.036364
+Barabasi Size 100              33        9.500000         4       3  0.095960
+Barabasi Size 410              92       19.512195         3       2  0.047707
+Dublin Graph                   50       13.487805         9       5  0.032978
+
+For experimental conditions number 2, I make the follow predictions for each experiment: 
+
+- **lower the infectiousness levels** (p1c decrease to __ - the equivelant of wearing a mask)
+
+For all the graphs, I predict ....
+
+- **increase time spent infectious (mu increase to __ - the equivelant of ____ )**
+
+For all the graphs, I predict ....
+
+
+- **decrease time spent exposed (mu decrease to __ - the equivelant of ___)**
+
+For all the graphs, I predict ....
+
+
+- **Vary multiple at the same time:**
+    - lower the infectious level (p1c=)
+    - increase time spect infectious (mu=)
+    - increase time spent exposed (mu=)
+
+For all the graphs, I predict ....
+
+
 ### Results
 
 #### Experimental Conditions 1
@@ -117,6 +162,9 @@ Explain why you think the results came out the way they did. If you are speculat
 state that you are hypothesizing a possible explanation. If the reason why is justified by the
 data, tell me how the data supports your explanation.
 
+
+Discussion for experimental conditions number 1 
+
 ### Future Work 
 
 
@@ -137,3 +185,7 @@ How can I fix this bug:
 
 
 Fill this in with the associated networkx functions where possible. def useful_graph_metrics(G): return { 'the maximum degree': , 'the average degree': , 'diameter of the graph': , 'radius of the graph': , 'density': , }
+
+
+2 hrs on finishing this! 
+2 hrs on research? 
