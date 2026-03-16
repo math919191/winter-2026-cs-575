@@ -1,9 +1,14 @@
-from collections.abc import Collection
+from collections.abc import Collection, Sequence
+from typing import Hashable, cast
 
 import matplotlib.lines as mlines
 import matplotlib.patches as mpatches
 from matplotlib import pyplot as plt
 import networkx as nx  # type: ignore
+import numpy as np
+from numpy.typing import NDArray
+from scipy.sparse import csr_matrix  # type: ignore
+from networkx.algorithms import bipartite  # type: ignore
 
 
 NODE_COLOR_TEMPLATE: dict[str, str] = {
@@ -39,6 +44,98 @@ def _get_node_color(node_type: str) -> str:
     if "," in node_type:
         return NODE_COLOR_TEMPLATE["combo"]
     return NODE_COLOR_TEMPLATE.get(node_type, "gray")
+
+
+def _get_positions(
+    G: nx.Graph,
+    layout: str,
+    prog: str,
+) -> dict[Hashable, tuple[float, float]]:
+    if layout == "graphviz":
+        return cast(dict[Hashable, tuple[float, float]], nx.nx_pydot.graphviz_layout(G, prog=prog))
+    if layout == "spring":
+        return cast(dict[Hashable, tuple[float, float]], nx.spring_layout(G))
+    raise ValueError("layout must be 'graphviz' or 'spring'")
+
+
+def show_basic_graph(
+    G: nx.Graph,
+    title: str,
+    node_color: str | Sequence[str] = "cyan",
+    *,
+    pos: dict[Hashable, tuple[float, float]] | None = None,
+    layout: str = "graphviz",
+    prog: str = "neato",
+    figsize: tuple[float, float] | None = None,
+    alpha: float = 0.5,
+    node_size: int = 20,
+    edge_color: str = "lightgray",
+    edge_width: float = 0.5,
+) -> dict[Hashable, tuple[float, float]]:
+    if figsize is None:
+        plt.figure()
+    else:
+        plt.figure(figsize=figsize)
+
+    if pos is None:
+        pos = _get_positions(G, layout=layout, prog=prog)
+
+    nx.draw_networkx_nodes(G, pos, node_color=node_color, alpha=alpha, node_size=node_size)
+    nx.draw_networkx_edges(G, pos, edge_color=edge_color, width=edge_width)
+    plt.title(title)
+    plt.axis("off")
+    return pos
+
+
+def build_bipartite_graph_from_biadjacency(
+    biadjacency_matrix: NDArray[np.float64],
+    left_prefix: str,
+    right_prefix: str,
+    left_type: str,
+    right_type: str,
+) -> nx.Graph:
+    sparse_matrix = csr_matrix(biadjacency_matrix)
+    G = bipartite.from_biadjacency_matrix(sparse_matrix)
+
+    n_left, n_right = biadjacency_matrix.shape
+    node_name_map = {index: f"{left_prefix}_{index}" for index in range(n_left)}
+    node_name_map.update(
+        {n_left + index: f"{right_prefix}_{index}" for index in range(n_right)}
+    )
+    G = nx.relabel_nodes(G, node_name_map)
+
+    nx.set_node_attributes(G, left_type, "node_type")
+    nx.set_node_attributes(
+        G,
+        {f"{right_prefix}_{index}": right_type for index in range(n_right)},
+        "node_type",
+    )
+    return G
+
+
+def show_genre_person_graph_from_biadjacency(
+    biadjacency_matrix: NDArray[np.float64],
+    title: str = "Which genres are associated with which people in top 26 movies?",
+) -> nx.Graph:
+    G = build_bipartite_graph_from_biadjacency(
+        biadjacency_matrix,
+        left_prefix="genre",
+        right_prefix="person",
+        left_type="genre",
+        right_type="person",
+    )
+    node_colors = [
+        "lightblue" if G.nodes[node]["node_type"] == "genre" else "m"
+        for node in G.nodes()
+    ]
+    show_basic_graph(G, title=title, node_color=node_colors, alpha=0.6)
+
+    legend_handles = [
+        mpatches.Patch(color="lightblue", label="genre"),
+        mpatches.Patch(color="m", label="person"),
+    ]
+    plt.legend(handles=legend_handles, title="Node Types", loc="best")
+    return G
 
 
 def show_graph(
